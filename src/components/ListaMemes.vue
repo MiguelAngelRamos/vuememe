@@ -7,27 +7,24 @@
     <option value="20">20</option>
   </select>
 
-  <div class="mt-5 col-10 offset-1 row">
-    <div class="card" style="width: 18rem;">
-      <img src="" class="card-img-top" alt="" />
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-      </div>
-    </div>
-    
-  </div>
+  <button class="mt-2 btn btn-success" @click="llamarActionCantidad">Buscar</button>
 
+  <div class="mt-5 col-10 offset-1 row">
+    <div class="mt-2 col-4" v-for="m in memes" :key="m.id">
+      <Meme :memecard="m"/>
+    </div>
+  
+  </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import Meme from '../components/Meme.vue';
 
 export default {
+  components: {
+    Meme
+  },
   data() {
     return {
       cantidadMeme: 0
@@ -37,7 +34,15 @@ export default {
     ...mapState(['memes'])
   },
   methods: {
-    ...mapActions(['obtenerMemes'])
+    ...mapActions(['obtenerMemes']),
+    llamarActionCantidad() {
+      console.log("llamarActionCantidad")
+      this.obtenerMemes(this.cantidadMeme)
+    }
+  },
+  created() {
+    /** En primera instancia traemos todos los memes */
+    this.obtenerMemes();
   }
 };
 </script>

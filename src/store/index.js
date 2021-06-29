@@ -14,7 +14,7 @@ export default createStore({
 
   },
   actions: {
-    /* Podemos hacer llamdos a Apis */
+    /* Podemos hacer llamados a Apis */
     async obtenerMemes({commit}, payload) {
       try {
         const data = await fetch('https://api.imgflip.com/get_memes');
@@ -22,16 +22,16 @@ export default createStore({
 
         if(!payload) {
           console.log("Traemos todos los memes");
-          commit('actualizarMemes', getMemes);
+          commit('actualizarMemes', getMemes.data.memes);
         } else {
           const resultTemp = [];
           // Aqui es donde le damos el tamaño al arreglo
-          getMemes.data.memes.ForEach((meme, index) => {
+          getMemes.data.memes.forEach((meme, index) => {
             if( index < payload ) {
               resultTemp.push(meme)
             }
           });
-          commit()
+          commit('actualizarMemes', resultTemp)
         }
 
       } catch (error) {
